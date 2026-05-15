@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "src/index.ts": {
+      "includeFiles": "node_modules/{@google/genai,pdfjs-dist,mammoth}/**"
+    }
+  }
+}
