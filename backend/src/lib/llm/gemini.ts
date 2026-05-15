@@ -1,4 +1,10 @@
-import { GoogleGenAI } from "@google/genai";
+import type { GoogleGenAI } from "@google/genai";
+// Vendored, pre-bundled copy. Vercel's @vercel/nft tracer mis-resolves
+// @google/genai's conditional `exports` map and drops dist/node/index.cjs,
+// crashing the Lambda. Requiring a local bundled file sidesteps nft entirely.
+// The `import type` above is erased at compile time (nft never sees it).
+const { GoogleGenAI: GoogleGenAIClient } =
+    require("../../vendor/genai.cjs") as typeof import("@google/genai");
 import type {
     StreamChatParams,
     StreamChatResult,
@@ -39,7 +45,7 @@ function apiKey(override?: string | null): string {
 }
 
 function client(override?: string | null): GoogleGenAI {
-    return new GoogleGenAI({ apiKey: apiKey(override) });
+    return new GoogleGenAIClient({ apiKey: apiKey(override) });
 }
 
 function toNativeContents(messages: StreamChatParams["messages"]): GeminiContent[] {
