@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node22 --format=cjs --outfile=dist/index.js --external:@napi-rs/canvas --external:canvas",
     "start": "node dist/index.js"
   },
   "dependencies": {
@@ -33,6 +34,7 @@
     "@types/express": "^4.17.21",
     "@types/multer": "^1.4.12",
     "@types/node": "^22.14.1",
+    "esbuild": "^0.27.7",
     "prettier": "^3.8.1",
     "tsx": "^4.19.3",
     "typescript": "^5.8.3"
