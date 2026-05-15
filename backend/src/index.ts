@@ -130,6 +130,13 @@ process.on("uncaughtException", (error) => {
   process.exit(1);
 });
 
-app.listen(PORT, () => {
-  console.log(`Mike backend running on port ${PORT}`);
-});
+// On Vercel the platform imports this app and runs it as a serverless
+// function — it must be the default export and must NOT call listen().
+// Locally (no VERCEL env) we start a normal HTTP server.
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Mike backend running on port ${PORT}`);
+  });
+}
+
+export default app;
